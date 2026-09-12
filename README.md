@@ -19,6 +19,8 @@ cypress/
 		services/               Serviços para chamadas à API
 cypress.config.js           Configuração do Cypress e ambientes
 cypress.env.json            Credenciais locais, não versionadas
+.github/workflows/ci.yml    Pipeline de integração contínua
+cypress/reports/            Relatório HTML gerado localmente
 ```
 
 ## Linguagem e frameworks
@@ -74,6 +76,26 @@ Executar um arquivo específico:
 ```bash
 npx cypress run --spec cypress/integration/users/user.cy.js
 ```
+
+## Relatório personalizado
+
+Os testes geram arquivos JSON em `cypress/results`. Para consolidá-los em um
+relatório HTML com título e página personalizados:
+
+```bash
+npm run test:ci
+npm run report:generate
+```
+
+O relatório fica em `cypress/reports/index.html`. Os arquivos gerados
+não são versionados e, no CI, são publicados como artefato da execução.
+
+## CI/CD
+
+O workflow `.github/workflows/ci.yml` executa a suíte em cada `push` e
+`pull_request`, gera o relatório mesmo quando um teste falha e publica os
+arquivos HTML/JSON na aba **Actions** do GitHub. O pipeline usa Node.js 20 e
+`npm ci`; por isso, o `package-lock.json` deve ser mantido no repositório.
 
 ## Ambientes
 

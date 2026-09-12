@@ -5,6 +5,15 @@ module.exports = defineConfig({
 
   e2e: {
     specPattern: "cypress/integration/**/*.cy.js",
+    reporter: "mochawesome",
+    reporterOptions: {
+      reportDir: "cypress/results",
+      overwrite: false,
+      html: false,
+      json: true,
+      timestamp: true,
+      quiet: true
+    },
 
     setupNodeEvents(on, config) {
       const environments = {

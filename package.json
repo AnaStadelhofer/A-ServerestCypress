@@ -9,6 +9,8 @@
   "scripts": {
     "open:dev": "cypress open --env environment=dev",
     "run:dev": "cypress run --env environment=dev",
+    "test:ci": "cypress run --env environment=dev",
+    "report:generate": "mochawesome-merge \"cypress/results/*.json\" > cypress/merged-report.json && marge cypress/merged-report.json --reportDir cypress/reports --reportFilename index.html --reportTitle \"ServeRest API - Relatório de testes\" --reportPageTitle \"ServeRest API | Testes automatizados\" --inline",
     "cy:chrome": "cypress run --browser chrome",
     "cy:firefox": "cypress run --browser firefox",
     "cy:edge": "cypress run --browser edge"
@@ -18,6 +20,9 @@
     "cypress-plugin-api": "^2.11.2"
   },
   "devDependencies": {
-    "@faker-js/faker": "^9.9.0"
+    "@faker-js/faker": "^9.9.0",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^5.0.0",
+    "mochawesome-report-generator": "^6.2.0"
   }
 }
