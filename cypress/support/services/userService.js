@@ -27,11 +27,12 @@ export const deleteUser = (id) => {
     })
 }
 
-export const createUser = (payload) => {
+export const createUser = (payload, options = {}) => {
         return cy.request({
         method: 'POST',
         url: `/usuarios`,
-        body: payload
+    body: payload,
+    ...options
     }).then(response => {
         cy.wrap(response);
     })
@@ -40,7 +41,7 @@ export const createUser = (payload) => {
 export const updateUser = (payload, id) => {
         return cy.request({
         method: 'PUT',
-        url: `/usuarios`,
+    url: `/usuarios/${id}`,
         body: payload
     }).then(response => {
         cy.wrap(response);

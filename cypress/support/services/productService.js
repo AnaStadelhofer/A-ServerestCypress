@@ -21,17 +21,24 @@ export const getProductByID = (id) => {
 export const deleteProduct = (id) => {
         return cy.request({
         method: 'DELETE',
-        url: `/produtos/${id}`
+    url: `/produtos/${id}`,
+    headers: {
+        Authorization: Cypress.env("token")
+    }
     }).then(response => {
         cy.wrap(response);
     })
 }
 
-export const createProduct = (payload) => {
+export const createProduct = (payload, options = {}) => {
         return cy.request({
         method: 'POST',
-        url: `/produtos/${id}`,
-        body: payload
+    url: `/produtos`,
+    body: payload,
+    headers: {
+        Authorization: Cypress.env("token")
+    },
+    ...options
     }).then(response => {
         cy.wrap(response);
     })
@@ -40,8 +47,11 @@ export const createProduct = (payload) => {
 export const updateProduct = (payload, id) => {
         return cy.request({
         method: 'PUT',
-        url: `/produtos`,
-        body: payload
+    url: `/produtos/${id}`,
+    body: payload,
+    headers: {
+        Authorization: Cypress.env("token")
+    }
     }).then(response => {
         cy.wrap(response);
     })

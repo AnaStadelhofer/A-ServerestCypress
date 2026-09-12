@@ -1,31 +1,102 @@
-The project supports multiple environments through environment variables, allowing easy execution against dev, staging, or production without code changes.
+# Testes automatizados da API ServeRest
 
-# Results
+## Objetivo
 
-Prints de execução
+Automatizar os principais fluxos da API ServeRest com testes de API usando Cypress, cobrindo autenticação, usuários, produtos e carrinhos.
 
-Porcentagem de cobertura
+## Estrutura
 
-## 🔧 Multi-Environment Configuration
+```text
+cypress/
+	fixtures/                 Dados de apoio dos testes
+	integration/
+		auth/                   Cenários de autenticação
+		carts/                  Cenários de carrinhos
+		products/               Cenários de produtos
+		users/                  Cenários de usuários
+	support/
+		commands.js             Comandos customizados e geração de dados
+		services/               Serviços para chamadas à API
+cypress.config.js           Configuração do Cypress e ambientes
+cypress.env.json            Credenciais locais, não versionadas
+```
 
-This project supports multiple environments using dynamic `baseUrl` configuration.
+## Linguagem e frameworks
 
-Available environments:
+- JavaScript
+- Cypress
+- Faker.js, para geração de dados aleatórios
+- cypress-plugin-api
+- API ServeRest
 
-- dev
-- staging
-- prod
+## Pré-requisitos
 
-### Running tests
+- Node.js instalado
+- Dependências instaladas com `npm install`
+- Acesso à API ServeRest
 
-Run tests in dev (default):
+## Executar os testes
+
+Instalar dependências:
+
+```bash
+npm install
+```
+
+Executar toda a suíte:
+
+```bash
 npx cypress run
+```
 
-Run tests in staging:
+Abrir o Cypress no modo visual:
+
+```bash
+npx cypress open
+```
+
+Executar pelo script do ambiente de desenvolvimento:
+
+```bash
+npm run run:dev
+```
+
+Executar em um navegador específico:
+
+```bash
+npm run cy:chrome
+npm run cy:firefox
+npm run cy:edge
+```
+
+Executar um arquivo específico:
+
+```bash
+npx cypress run --spec cypress/integration/users/user.cy.js
+```
+
+## Ambientes
+
+O ambiente pode ser selecionado pela variável `environment`:
+
+```bash
 npx cypress run --env environment=dev
-
-Run tests in production:
 npx cypress run --env environment=prod
+```
 
+As URLs são configuradas em `cypress.config.js`.
 
-This project uses a cypress.env.json file (ignored via .gitignore) to store sensitive credentials locally.
+## Credenciais
+
+O arquivo `cypress.env.json` é local e deve permanecer fora do controle de versão. Ele pode armazenar credenciais neste formato:
+
+```json
+{
+	"auth": {
+		"email": "seu-email",
+		"password": "sua-senha"
+	}
+}
+```
+
+Os testes criam usuários temporários quando necessário, reduzindo a dependência de credenciais fixas.

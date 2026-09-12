@@ -9,7 +9,7 @@ export const getAllCarts = () => {
     })
 }
 
-export const getProductByID = (id) => {
+export const getCartByID = (id) => {
     return cy.request({
         method: 'GET',
         url: `/carrinhos/${id}`
@@ -18,30 +18,39 @@ export const getProductByID = (id) => {
     })
 }
 
-export const deleteProduct = (id) => {
+export const finishPurchase = () => {
         return cy.request({
         method: 'DELETE',
-        url: `/carrinhos/${id}`
+    url: `/carrinhos/concluir-compra`,
+    headers: {
+        Authorization: Cypress.env("token")
+    }
     }).then(response => {
         cy.wrap(response);
     })
 }
 
-export const createProduct = (payload) => {
+export const cancelPurchase = () => {
         return cy.request({
-        method: 'POST',
-        url: `/carrinhos`,
-        body: payload
+    method: 'DELETE',
+    url: `/carrinhos/cancelar-compra`,
+    headers: {
+        Authorization: Cypress.env("token")
+    }
     }).then(response => {
         cy.wrap(response);
     })
 }
 
-export const updateProduct = (payload, id) => {
+export const createCart = (payload, options = {}) => {
         return cy.request({
-        method: 'PUT',
-        url: `/carrinhos`,
-        body: payload
+    method: 'POST',
+    url: `/carrinhos`,
+    body: payload,
+    headers: {
+        Authorization: Cypress.env("token")
+    },
+    ...options
     }).then(response => {
         cy.wrap(response);
     })

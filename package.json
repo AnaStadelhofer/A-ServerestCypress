@@ -7,8 +7,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "open:dev": "cypress open --env envrionment=dev",
-    "run:dev": "cypress run --env envrionment=dev",
+    "open:dev": "cypress open --env environment=dev",
+    "run:dev": "cypress run --env environment=dev",
     "cy:chrome": "cypress run --browser chrome",
     "cy:firefox": "cypress run --browser firefox",
     "cy:edge": "cypress run --browser edge"

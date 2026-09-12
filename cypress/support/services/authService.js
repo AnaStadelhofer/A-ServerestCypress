@@ -1,31 +1,31 @@
 const auth = Cypress.env("auth");
 
-export const getToken = () => {
+export const login = (credentials, options = {}) => {
     return cy.request({
         method: 'POST',
         url: `/login`,
         log: false,
-        body: {
+        body: credentials,
+        ...options
+    });
+}
+
+export const getToken = () => {
+    return login({
             email: auth.email,
             password: auth.password
-        }
-    }).then(response => {
+        }).then(response => {
         Cypress.env("token", response.body.authorization);
-        expect(res.status).to.eq(200)
+        expect(response.status).to.eq(200);
     })
 }
 
 export const getNewUserToken = () => {
-    return cy.request({
-        method: 'POST',
-        url: `/login`,
-        log: false,
-        body: {
+    return login({
             email: Cypress.env("email"),
             password: Cypress.env("password")
-        }
-    }).then(response => {
+        }).then(response => {
         Cypress.env("token", response.body.authorization);
-        expect(res.status).to.eq(200)
+        expect(response.status).to.eq(200);
     })
 }
